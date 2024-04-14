@@ -7,7 +7,10 @@ export default defineNuxtConfig({
     },
   },
   devtools: { enabled: true },
-  modules: ["@nuxtjs/tailwindcss", "@vueuse/nuxt"],
+  modules: ["@nuxtjs/tailwindcss", "@vueuse/nuxt", "nuxt-gtag"],
+  gtag: {
+    id: "G-F056Q3EJ5C",
+  },
   runtimeConfig: {
     public: {
       geminiApiSecret: process.env.NUXT_GEMINI_API_SECRET,
