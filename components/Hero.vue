@@ -13,10 +13,8 @@ defineProps<Props>();
         class="max-w-sm rounded-lg shadow-2xl" />
       <div>
         <h1 class="text-5xl font-bold">OptiScript</h1>
-        <p class="py-6">
-          Powered by Gemini, provides concise image descriptions, fostering
-          inclusivity for visually impaired and disabled individuals. Explore
-          the world visually with OptiScript.
+        <p class="text-2xl py-6">
+          Powered by Gemini, provides concise image descriptions.
         </p>
         <slot />
       </div>
