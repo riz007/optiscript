@@ -27,6 +27,7 @@ const speech = useSpeechSynthesis(generatedText.value, {
 let synth: SpeechSynthesis;
 const voices = ref<SpeechSynthesisVoice[]>([]);
 const { copy } = useClipboard();
+const prompt = ref("Describe the image using simple words");
 
 const config = useRuntimeConfig();
 
@@ -65,12 +66,11 @@ const generateText = async () => {
     model: "gemini-pro-vision",
     safetySettings,
   });
-  const prompt: string = "Describe the image using simple words";
 
   const imagePart = await fileToGenerativePart(selectedFile.value);
   isLoading.value = true;
   try {
-    const result = await model.generateContent([prompt, imagePart]);
+    const result = await model.generateContent([prompt.value, imagePart]);
     const response = await result.response;
     isLoading.value = false;
     showChooseFile.value = false;
@@ -114,15 +114,22 @@ onMounted(() => {
           class="file-input file-input-bordered file-input-md w-full max-w-xs"
           accept="image/*" />
       </div>
-      <button
-        v-if="selectedFile"
-        type="button"
-        class="btn btn-active btn-wide btn-neutral mt-6 hover:btn-secondary w-full max-w-xs"
-        :class="{ 'btn-disabled': isLoading }"
-        @click="generateText">
-        <span v-if="isLoading" class="loading loading-spinner"></span>
-        Generate
-      </button>
+      <template v-if="selectedFile">
+        <div>
+          <textarea
+            placeholder="Write your custom prompt here..."
+            v-model.trim="prompt"
+            class="textarea textarea-bordered textarea-lg w-full max-w-xs mt-6"></textarea>
+        </div>
+        <button
+          type="button"
+          class="btn btn-active btn-wide btn-neutral mt-6 hover:btn-secondary w-full max-w-xs"
+          :class="{ 'btn-disabled': isLoading }"
+          @click="generateText">
+          <span v-if="isLoading" class="loading loading-spinner"></span>
+          Generate
+        </button></template
+      >
     </template>
     <template v-else>
       <p>
